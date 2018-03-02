@@ -1,0 +1,149 @@
+	DataBase Management System with MYSQL:
+-----------------------------------------------
+
+Rows: 
+	Also called RECORDS
+
+Columns:
+	Also Called FIELDS
+
+
+Commenting in MySQL
+-- This is a one line Comment. Whitespace after -- is mandatory
+
+# This is also a one line comment
+
+/* This is your 
+MultiLine Comment*/
+
+
+# To run the line UNDER THE CURSOR use Ctrl+Enter
+# To run the whole query use Ctrl+Shift+Enter
+
+# Creating a database
+create database sample;
+# using the database
+use sample;
+
+# Deleting the database
+drop database sample;
+
+
+
+DataTypes in MySQL
+
+For numeric fields
+-Bigint -> 8 Bytes ~ 2^63
+-Int -> 4 Bytes
+-Smallint (-32768 - 32767) -> 2 Bytes
+-Tinyint (0 - 255) -> 1 Byte
+
+-Decimal(m,d)
+-Numeric (Similar to decimal) 
+-Float(m,d) -> Display length (m) and decimal (d) are optional.
+
+DateTime Datatypes
+-Datetime (yyyy-MM-dd HH:mm:ss)
+-Date (yyyv-MM-dd)
+-Time (HH:mm:ss)
+-Year (yyyy)
+
+Character Datatypes
+-Char(m) --> m = upper limit fixed length
+-Varchar(m) --> variable length 
+-Text --> To store large amount of text
+
+For storing images and video files
+-Blob
+
+
+
+Constraints:
+
+-Not null	-> Field can't be null.
+
+-Default	-> If while entering values some misgiving occurs then the default 
+				value will be entered. For example if the data is same for many fields.
+
+-Unique		-> Field should have a unique value
+
+-Primary Key -> Unique and Not Null
+
+-Foreign Key
+
+-Check Constraint
+
+
+
+Creating Tables
+
+create table employee
+(
+id int primary key, 
+name varchar(30) not null,
+Dob datetime,
+email varchar(40)
+);
+
+DESC employee; # To Describe employee
+
+select * from employee;
+
+
+# Using employee table to create another table --> this one copies the schema as well as the data
+
+create table emp_info as
+select id, name 
+from employee;
+
+# delete / drop table and all its contents
+
+drop table emp_info;
+
+# to show tables in the database
+
+show tables;
+
+
+
+# insert data into table --> one row at a time;
+
+Insert into employee (id, name, Dob)
+values(
+123,
+'Angshu',
+'2016-12-03'
+);
+
+DESC employee;
+
+select * from employee;
+
+# Order of input is essential
+
+Insert into employee 
+values(
+124,
+'Angshu1',
+'2016-12-03',
+'angshuman@gmail.com'
+);
+
+
+
+# Populating one table using another table;
+
+insert into emp_info (id, name, dob, email)
+select id, name, dob, email
+from employee;
+
+
+Desc emp_info;
+
+select * from emp_info;
+
+
+# select query
+
+select id, name, Dob 
+from employee;
