@@ -1,0 +1,516 @@
+Dated : 20-2-2018 
+Topic : MS-SQL
++============================================================================================
++Create Table Inbox
++-serial No. -> primary key -> autoIncrement
++-User name
++-subject
++-body
++-status
++============================================================================================
+
+--create Table Inbox
+create table Inbox
+(Serial_No int identity(1,1),
+	UserName varchar(32) not null,
+	Subject varchar(50),
+	Body varchar(200),
+	status char(1) default 'T');
+	
+--Inserting into Inbox
+Insert into Inbox (UserName, Subject, Body)values
+('raj', 'Statement', 'ICICI Bank Statement');
+
+--Displaying the Table
+select * from Inbox;
+
+--Inserting into Inbox
+Insert into Inbox (UserName, Subject, Body)values
+('rajeev', 'Statement1', 'IOB Bank Statement');
+
+--Selecting Columns from Inbox
+select * from Inbox where UserName = 'raj' and status = 'T';
+
+--UPDATING Columns
+update Inbox set status = 'F' where Serial_No = '1';
+
+--Selecting Rows
+select * from Inbox where status = 'F';
+
+--update table
+update Inbox set Subject = 'State', --Use Comma Here
+Body = 'Hello World' where UserName = 'Rajeev';
+
+--Showing Columns
+select UserName, Subject from Inbox where UserName = 'raj';
+
+select * from Inbox where Serial_No in (1,3); -- showing rows for selected SerialNos.
+
+-- Delete and Truncate
+-- Delete is DML Truncate is DDL;
+-- Table is recreated when truncate is used;
+-- where is used in case of delete;
+-- where can't be used for truncate'
+-- DDL commands include create, alter, drop, truncate, rename;
+
+--- Deleting from Inbox
+delete from Inbox where Serial_No in (4, 5);
+-- deleting the data
+delete from Inbox;
+
+--now Inserting will not start from 1;
+
+--truncating table will result in the serial number staring from 1
+truncate table Inbox;
+
+
++==================================================================================================
++Create a Table where age is always greater than 18, Pincode is always 6 digit.
++If the conditions are not met don't add details.													
++
++==================================================================================================
+
+--creating Table
+create Table Employee
+(ID int NOT NULL,
+First_Name varchar(255), 
+Last_Name varchar(255) NOT NULL,
+Age int CHECK (Age > 18),
+City varchar(255),
+PinCode int CHECK(PinCode LIKE '[0-9][0-9][0-9][0-9][0-9][0-9]'));
+
+--Inserting into Employee
+insert into Employee values
+(1, 'Anmol', 'Aggarwal', 22, 'Raniganj',712563);
+
+-- Display Table
+select * from Employee;
+
+-- Testing for discrepancies
+insert into Employee values
+(1, 'Anmol', 'Aggarwal', 16, 'Raniganj',712563);
+
+--The INSERT statement conflicted with the CHECK constraint "CK__Employee__Age__023D5A04". 
+--The conflict occurred in database "ABCD", table "dbo.Employee", column 'Age'.
+--The statement has been terminated.
+
+-- Using alter Command to age constraint
+alter table Employee drop constraint CK__Employee__Age__023D5A04;
+
+--Using exec command
+exec sp_help Employee
+
+select First_Name, Last_Name from Employee where Age = 20;
+select * from Employee where Age > 20;
+
+--using wildcards
+select * from Employee where Last_Name Like 'r%';
+select * from Employee where First_Name like '%r';
+select * from Employee where Last_Name Like '__j%r'; -- third char is j and last char is r
+
+
+-- altering the table
+alter table Employee add Salary int;
+
+*******************************************************************************************************
+Notes:
+There are two kinds of functions to manipulate user defined data:
+- System defined function also called aggregate function.
+- User defined function.
+*******************************************************************************************************
+
+Dated : 22-2-2018
+
+=======================================================================================================
+Use of MAX MIN UPPER AVG COUNT etc. functions, Use of nested queries
+
+=======================================================================================================
+
+-- creating Table
+create table Employee3(ID int primary key,
+First_Name varchar(255), 
+Last_Name varchar(255) NOT NULL,
+Age int CHECK (Age > 18),
+Salary int,
+City varchar(255),
+PinCode int );
+
+--insert
+insert into Employee3 values
+(1, 'Anmol', 'Aggarwal', 22, 12345, 'Raniganj',712563);
+insert into Employee3 values
+(2, 'qwer', '2r2rr', 22, 2345, 'Raniganj',712563);
+insert into Employee3 values
+(3, 'wdifgqilf', 'fqgrhqhr', 22, 23453, 'Raniganj',712563);
+
+--max min count average upper 
+select MAX(Salary)as Maxsalary from dbo.Employee3;
+select Min(Salary)as Minsalary from dbo.Employee3;
+select AVG(Salary)as totalRecord from dbo.Employee3;
+select UPPER(Last_Name)as NAME from dbo.Employee3;
+
+--orderby
+select * from dbo.Employee3 order by ID desc;
+select top 3 Salary from Employee3;
+
+select MAX(Salary) from Employee3 
+	where Salary not in (select MAX(Salary) from Employee3);
+
+select MAX(Salary) from Employee3 
+	where Salary < (select MAX(Salary) from Employee3);
+	
+select MAX(Salary) from Employee3 
+	where Salary not in (select top 3 Salary from Employee3 order by Salary desc);
+	
+select distinct MIN (Salary) from Employee3 
+	where Salary in (select top 5 Salary from Employee3 order by Salary desc);
+	
+select * from Employee3 
+	where Salary in 
+	(
+		select distinct MAX(Salary) from Employee3 
+			where Salary not in (select top 4 Salary from Employee3 order by Salary desc)
+	);
+	
+-- copy record to other table
+select * into emp10 from Employee3 where ID = 1;
+
+-- To Copy the schema only (Use a wrong condition)
+select * into emp11 from Employee3 where 1 = 2;
+
+-- Inserting into a blank table
+insert into emp11 select * from Employee3 where ID = 1;
+
+--drop table
+drop table Employee3;
+
+-- view table
+select * from Employee3;
+select * from emp10;
+select * from emp11;
+
+
+Dated : 23 - 2 -2018
+*********************************************************************************************************
+Joins
+
+*********************************************************************************************************
+
+Types of join:
+	-Inner join 
+	-Outer join
+	-cross join
+	-self join
+
+
+-Left Outer join
+-Right Outer join
+-Full Outer join -> not available in MYSQL
+
+-Inner Join: 
+	We can fetch common record from more than table using inner join.
+
+-Left Outer join: Fetch all the record from the LEFT side, if record doesnot match from RIGHT side print null.
+-Right Outer join: Fetch all the record from the RIGHT side, if record doesnot match from LEFT side print null.
+-Full Outer join: Fetch all the record from more than one table.
+
+-Cross Join: Cartesian Product --> result set of one table multiplied by result set of another table.
+		Never use condition on cross join else it will behave like a null join.
+
+-Self Join: Recursive Relationship --> Table itself is involved in self relationship.
+
+
+===================================================================================================================
+Use of Ltrim etc.
+===================================================================================================================
+create table Employee4(Emp_id int, emp_name Varchar(50));
+
+insert into Employee4  values(5, 'Raj Kumar');
+
+select * from Employee4;
+
+select emp_name, LEN(emp_name) as Length_1 from Employee4
+order by emp_name;
+
+select emp_name, LEN(Ltrim(emp_name)) from Employee4; 
+
+===================================================================================================================
+Use of Join
+===================================================================================================================
+
+create table employee2(Emp_id int,emp_name varchar(50));
+insert into employee2 values(5,'  raj k  ');
+select * from employee2;
+select emp_name, LEN(emp_name) as length_1 from employee2 order by emp_name;
+
+select emp_name,LEN(ltrim(emp_name)) from employee2;
+select emp_name,LEN(rtrim(emp_name)) from employee2;
+
+--JOIN
+
+create table empdetails(Emp_id int,emp_name varchar(50),emp_salary bigint,emp_address varchar(50),
+emp_phone bigint, emp_doj date);
+insert into empdetails values(3,'raj kumar',25000,'Del',2354321252,'03/01/2015');
+select * from employee2;
+select * from empdetails;
+select * from empinfo;
+
+--
+
+select e.Emp_id,e.emp_name,e1.emp_address,e1.emp_phone 
+from employee2 e,empdetails e1
+where e.Emp_id=e1.Emp_id;
+
+--
+select e.Emp_id,e.emp_name,e1.emp_address,e1.emp_phone 
+from employee2 e inner join empdetails e1
+on e.Emp_id=e1.Emp_id;
+
+alter table empdetails drop column emp_name;
+--
+select empdetails.emp_address,empdetails.emp_phone
+from empdetails inner join employee2
+on empdetails.Emp_id=employee2.Emp_id and employee2.emp_name='raj';
+--
+select empdetails.emp_address,empdetails.emp_phone
+from empdetails where Emp_id in
+(select Emp_id from employee2 where emp_name='raj');
+--
+create table empinfo(Emp_id int,emp_dept varchar(50));
+insert into empinfo values(3,'accounts');
+
+--delete from employee2 where emp_name in('sales','IT','accounts');
+
+--
+select employee2.Emp_id,employee2.emp_name,
+empdetails.emp_address,empdetails.emp_phone,
+empinfo.emp_dept
+from employee2 inner join empdetails on employee2.Emp_id=empdetails.Emp_id
+inner join empinfo on empdetails.Emp_id=empinfo.Emp_id;
+--
+select e.Emp_id,e.emp_name,e1.emp_address,e1.emp_phone 
+from employee2 e left outer join empdetails e1
+on e.Emp_id=e1.Emp_id;
+
+--
+
+select e.Emp_id,e.emp_name,e1.emp_address,e1.emp_phone 
+from employee2 e cross join empdetails e1
+
+
+========================================================================================================
+Dated : 26-2-2018
+========================================================================================================
+Views: 
+-Its like a virtual table 
+-Its virtual table - doesn't occupy memory
+-large table divided into small table
+-Collection of more than one table
+
+types:
+Simple View
+Complex View
+
+{materialized view ==> Used in oracle DBMS, which keeps the schema of the table}
+
+Simple view:
+Fetch the record from single table in a view.
+Can perform any operation in a single view just like a table ==> DML & DCL operation only.
+Any DML or DCL command can run on a view, Running such commands affect the table.
+
+
+Complex view:
+Fetching the record from more than one table in a view.
+Used for READONLY purpose
+
+===
+Code:
+Simple View:
+--
+create view HR
+as
+select Emp_id, Fname, DOJ, salary from EmployeeDetails;
+--
+insert into HR values(11,"Raajee","07-05-2015", 125648);
+--
+delete from EmployeeDetails where emp_id = 1;
+select * from EmployeeDetails;
+
+select * from HR;
+
+
+--
+alter view HR
+as
+select * from EmployeeDetails;
+
+--
+select * from HR;
+--
+
+alter table EmployeeDetails add Country varchar(50); ==> This will not be shown in view; beacuse view is not updated 
+with this schema change.
+
+===
+
+Complex View:
+
+===
+
+----Functions regarding date:
+--Current date
+select GETDATE(); //yyyy/MM/dd
+--Henceforth replace column name with getdate();
+
+--insert in mm/dd/yyyy/MM/dd
+
+select CONVERT(varchar(8), getdate(), 101);
+select CONVERT(varchar(10), getdate(), 101); //101 is a format To see format Google search
+
+--datediff
+select DATEDIFF(dd, getdate(), '03/20/2018');
+select DATEDIFF(mm, getdate(), '03/20/2018');
+select DATEDIFF(yy, getdate(), '03/20/2018');
+
+--date part
+select DATEPART(dd, getdate()) as day;
+select DATEPART(mm, getdate()) as month;
+select DATEPART(yy, getdate()) as year;
+
+also
+select DATEPART(dd, getdate()) as day,
+	DATEPART(mm, getdate()) as month,
+	DATEPART(yy, getdate()) as year;
+	
+select YEAR(getdate());
+
+
+--DATENAME
+select DATENAME(dw, getdate());
+select DATENAME(dw, '01/02/1011');
+
+--DATEADD
+select DATEADD(DD, 33, GETDATE()); //Adding 33 Days to getdate.
+
+
+===================================================================================================
+Dated: 2-3-2018
+
+Stored Procedure:
+Pre-compiled SQL Statement
+
+Advantages:
+-Precompiled
+-Network Load Reduction
+-Security Mechanism
+
+Types of stored Procedures:
+
+-Parameterised
+
+	-Input and Output parameters
+		-Input --> By default stored procedure is input parameter (Use IN keyword for input parameter in Mysql)
+		-Output --> If we want to return the value from stored procedure then we use the OUTPUT keyword (Use OUT for Mysql)
+		
+-Non Parameterised
+
+
+
+Example:
+
+--Non parameterized
+create proc usp_abc
+as
+select * from StudentDetails;
+
+--parameterized
+create proc usp_insert(@roll int,@name varchar(120),@add char(120))
+as
+insert into StudentDetails values(@roll,@name,@add);
+
+--
+exec usp_insert 1,adaddf,dfsdf;
+--
+usp_abc
+
+--
+alter proc usp_deleteroll(@roll int) with encryption
+as 
+delete from StudentDetails where Roll_Number=@roll;
+--
+usp_deleteroll 1;
+
+--
+select * from sysobjects where xtype='p';
+--
+exec sp_helptext usp_deleteroll;
+
+--Gmail database
+create database Gmail;
+use Gmail;
+--Registration
+create table Registration
+(username varchar(40) primary key,
+password varchar(234) not null,
+Email varchar(234),
+securityQuestion varchar(234),
+answer varchar(234),
+DOB date,
+Phone bigint);
+--stored proc for insert
+create proc usp_insert(@username varchar(40),@password varchar(234),@email varchar(234),
+@secQues varchar(234),@answer varchar(234),@dob date,@phone bigint)
+as
+insert into Registration values (@username,@password,@email,@secQues,@answer,@dob,@phone);
+--
+usp_insert 'abc','1234','dfd@gmail.com','sdfgsfg','sdfsdfg','1995-01-01',231231231;
+--stored proc for select
+create proc usp_select
+as
+select * from registration;
+--
+usp_select;
+--stored proc for gmail login
+create proc usp_gmail_login(@username varchar(40),@password varchar(234))
+as
+begin
+select username,password from registration
+where username=@username and password=@password
+end;
+--
+usp_gmail_login 'abc','1234';
+--how to encrypt a stored proc
+alter proc usp_gmail_login(@username varchar(40),@password varchar(234)) with encryption
+as 
+begin
+select username,password from registration
+where username=@username and password=@password
+end;
+--
+exec sp_helptext usp_gmail_login
+
+
+--
+create table mailbox
+(username varchar(40) references registration(username),
+frommail varchar(232),
+subject varchar(233),
+body varchar(3423),Maildate date);
+--
+create proc usp_mailbox(@username varchar(40),
+@frommail varchar(232),
+@subject varchar(233),
+@body varchar(3423),@Maildate date)
+as
+begin
+insert 
+
+
+
+
+
+
+
+
+
+

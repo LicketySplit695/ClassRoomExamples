@@ -1,0 +1,99 @@
+Dated: 28/2/2018
+
+ASP --> Server side scripting language.
+	--> Does not follow OOPS
+	--> Pages were interpreted
+
+ASP.NET
+	--> Its a technology for creation of dynamic web pages, internet based application,
+		by use of different .NET Language.
+	--> .aspx is the extension.
+	--> ASP.NET runs on IIS(Internet Information Services) Server
+	--> BASE-CLASS is page under System.Web.UI
+	
+	Types of COntrol in ASP.NET
+	--> Client Side
+	--> Server Side
+	
+	If <input> tag --> Client side --> HTML --> By default runs on browser
+	if <asp> tag --> Server Side
+	
+	Together with .aspx they can run on both client and server side.
+	
+	aspnet_wp.exe --> All the server control is converted into HTML control because bowser understands only HTML.
+	
+	
+ADO.NET
+	--> Technology that provides Connections with DATABASE(Back END) and WEBSITE(Front End).
+	--> Used for DATA Sharing and Distributed Application
+	--> We can also use LINQ and ENTITY FRAMEWORK to do the same.
+		
+			GUI
+			
+		Front End ---> ADO.NET (c#) ---> Backend
+						or
+						JDBC (JAVA)
+						or
+						PDO (php)
+	
+																						|----> using.System.data(Parent Namespace in ADO.NET)
+					--------------------------ADO.NET----------------------				|
+					|													  |				|---->Data Relation		
+			.NET data Provider											DataSet---------|---->Data View
+	---------------------------------------------		-------------------------------------------------------------				
+	|	Connection Object						|		|				Data Table									|
+	|	Command 	"		DataAdapter			|		|	-----------------------------------------------------	|
+	|	DataReader 	"		Select Command		|		|	|			Data Row								|	|
+	|						Insert	"			|		|	|	--------------------------------------------	|	|
+	|						Update 	"			|		|	|	|	____Data Column______________________	|	|	|				
+	|						Delete 	"			|		|	|	|	|Constraint, Primary Key, Foreign Key|	|	|	|
+	|											|		|	|	|	|____________________________________|	|	|	|
+	---------------------------------------------		|	|	|--------------------------------------------	|	|
+		|				|				|				|	-----------------------------------------------------	|				
+		|				|				|				-------------------------------------------------------------		
+		SQL			Oracle			MS- Access								|
+		|				|				|									|
+using System.data.		|	using System.data.OLEDB							XAML
+sqlClient				|																
+						|
+		using System.data.OracleClient
+		
+				Connected Mode											DisConnected Mode
+			
+		
+	Command Object Methods
+		Execute NonQuery()  --> Execute with database, doesn't return a value but returns how many rows are affected --> return type INT
+		Execute Reader()	-->	Execute with database, Return Rows, --> Return type DATAREADER
+		Execute Scalar()	--> Execute with database, return single value --> Return type OBJECT
+		Execute XMLReader()	--> Execute with XML, Return rows, return type XMLDATAREADER.	
+		
+	Classes / Objects that are used in .NET data Provider:
+		--> Connection Object --> We have to pass the Connection stream in Connection object
+		--> Command Object --> We have to pass the Command stream in Connection object
+		--> DataReader Object --> ReadOnly and Forward only
+		--> Data Adapter --> Bridge between Data Set and Database
+		
+	OLEDB can connect with any Database server with the help of Database drivers.
+	OLEDB and ODBC are unmanaged provider whereas SQL and ORACLE are unmanaged.
+	
+webdev.webserver.exe --> Inbuilt server provided by MS for developing Websites on fileSystem
+Every Server has an IP and port.
+
+Http: -- This website run on IIS server
+Ip: -- 127.0.01
+port: 8080
+localhost: local server: 127.0.0.1
+			port: 8080
+
+physical path: C:\inetpub\wwwroot			
+
+Page Directive Section -> To change an HTML page to ASPX. 
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Login" %>
+
+Common Property for validation control
+ControlToValidate
+ErrorMessage
+Display
+
+
+--By Default Connection State is closed
