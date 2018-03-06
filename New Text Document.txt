@@ -505,12 +505,154 @@ as
 begin
 insert 
 
+============================================================================================
 
 
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
 
 
+NULL
+NULL
+8
+39
+87
+
+select name from player where team_id in (select id from team where name = 'Mumbai Indians') and id not in (select player_of_match from outcome) order by name;
+===========================================================================================
+
+--select * from Employee;
+
+create procedure usp_total(IN ename varchar(50), OUT total int)
+select count(*) into total from employee
+where emp_name = name;
+
+===========================================================================================
 
 
+Functions in SQl:
+-System Defined
+-User Defined
+
+User Defined (Scalar) - 1)Single value return
+			      2) Multi Valued return
+				  
+Functions are not pre - compiled as stored procedures.
+Functions can only be used for select only
+We can call function within stored procedure but vice- versa is not true.
 
 
+-- Single value return function
 
+create function <function name>([@parameter Parameter-DATATYPE]) --> (@id int)
+returns <datatype> --> varchar(40)
+as
+begin
+return (select emp_name from employee where emp_id = @id)
+end;
+
+
+--- To run
+select dbo.<function name>(123);
+
+
+-- Multiple value return function
+
+create function <function name>([@parameter Parameter-DATATYPE]) --> (@id int)
+returns table
+as
+begin
+return (select * from employee where emp_id = @id)
+end;
+
+
+--- In Mysql remove '@' sign
+
+
+------Transactions in SQL
+DTQL --> 
+-Commit
+-Rollback
+-Savepoint
+
+Every transaction follow ACID property.
+
+
+-- Code
+--creating the table
+create table Account(
+Acc_id int primary key,
+Acc_holder_name varchar(256) not null,
+CRDR decimal(15,2));
+
+--inserting values
+insert into Account
+values(1, 'Arun', 12000.00),
+(2, 'rajee', 20000.00),
+(3, 'Subham', 10000.00),
+(4, 'Roy', 50000.00);
+
+
+ 
+------- Indexing
+
+-We can search the record faster with searching
+-It helps in searching data from table without scanning all the rows. 
+
+types of application:
+-Simple
+-Composite
+-Unique
+
+-Simple
+create index <index_name>
+	on <table_name> (<Column_name>)
+	
+	
+-Composite
+create index <index_name>
+	on <table_name> (<Column_name>, <column_name>, ....)
+	
+Duplicacies may be present in smple and composite indexing.
+
+
+-Unique
+create UNIQUE index <index_name>
+	on <table_name> (<Column_name>)
+	
+-Renaming index
+Alter index <index_name>
+	rename to <new_index_name>
+	
+- droppping index
+drop index <index_name>
+
+
+Two types of index in sql-server:
+-->Clustered Index
+-->Non-Clustered Index
+
+	
+---- Full text indexing
+
+requirements:
+table must have a primary key;
+
+-within one table we can use upto 249 non-clustered index.
+
+-Right click on table from left -> Full text indexing -> define full text indexing
+
+select * from <table_name>
+where freetext (*, '<string to be seached>');
+
+for advanced searching use contains......
