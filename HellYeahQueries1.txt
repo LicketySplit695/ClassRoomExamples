@@ -1,0 +1,66 @@
+1.
+select substr(trim(id), length(trim(id)) - 3, 4) as Agent_ID, agent_name, phone,
+if (user_rating between 0 and 4, 'Average',
+if (user_rating between 5 and 7, 'Good',
+if (user_rating = 8, 'Excellent', null))) as User_Rating
+from travel_agent;
+
+2.
+select id, customer_name, email_id,
+coalesce(phone, null, 'Phone not found') as phone,
+date_format(dob, '%W,%D %M, %Y') as Date_Of_Birth
+from (select * from customer where monthname(dob) = 'May') o
+order by customer_name, id;
+
+3.
+select concat(concat(upper(substring(customer_name, 1, 1)),
+substring_index(substring(customer_name, 2), ' ', 1)), ' ',
+concat(upper(substring(substring_index(customer_name, ' ', -1), 1, 1)),
+substring(substring_index(customer_name, ' ', -1), 2))) as customer_name,
+upper(substring_index(substring_index(address, '-', 2), '-', -1))
+as City
+from (select * from customer where timestampdiff(year, dob, sysdate()) >= 20) a
+order by customer_name, id;
+
+4.
+select agent_name, c.*
+from travel_agent a left outer join booking_details b
+on a.id = b.agent_id
+left outer join customer c
+on b.customer_id = c.id
+order by agent_name, customer_name;
+
+5.
+select c.id, count(booking_id) as ticket_count
+from customer c inner join booking_details b
+on c.id = b.customer_id
+group by customer_id
+order by count(booking_id) desc;
+
+6.
+select id, customer_name
+from customer c inner join booking_details b
+on c.id = b.customer_id
+group by customer_id
+having count(booking_id) >=
+all(select count(booking_id) from booking_details group by customer_id);
+
+7.
+select distinct c.id, customer_name, upper(substring_index(substring_index(address, '-', 2), '-', -1))
+as city, dob, email_id, coalesce(c.phone, null, 'Phone not found') as Phone_Number
+from customer c inner join booking_details b
+on c.id = b.customer_id
+left outer join travel_agent t
+on b.agent_id = t.id
+where t.id is null
+and monthname(journey_date) = 'February'
+order by year(dob);
+
+8.
+select a.id, agent_name, customer_name, email_id, booking_id, ticket_cost
+from customer c inner join booking_details b
+on c.id = b.customer_id
+inner join travel_agent a
+on a.id = b.agent_id
+where from_station = 'Kolkata' or to_station = 'Kolkata'
+order by month(journey_date) desc
