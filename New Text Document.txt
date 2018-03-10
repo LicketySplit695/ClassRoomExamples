@@ -656,3 +656,185 @@ select * from <table_name>
 where freetext (*, '<string to be seached>');
 
 for advanced searching use contains......
+
+======================================================================================================
+
+correlated query
+----------------
+
+-- If the subquery depend on outer query for its value then subquery is called
+-- correlated query gets executed once for every row that is selected by the outer query
+-- correlated subquery cannot be executed independently without outer query
+
+
+select name, (select sum(Quantity_sales) from tblproductsales
+	where tblproductsales.id = tblproduct.id) from tblproduct;
+	
+	
+======================================================================================================
+
+Cursor:
+Cursor is a temporary table (# sign before a table --> temporary)
+We can fetch once record at a time using cursor
+
+Types:
+-forward only
+-scroll
+
+Forward Only --> we can fetch next record a time
+scroll --> We can fetch any one record at a time
+
+-- declaring a forward only cursor-->
+declare rpt cursor
+for
+select * from emp9
+--
+open rpt;
+fetch next from rpt;
+close rpt;
+fetch last from rpt --> illegal
+
+-- scroll cursor
+declare rpt1 cursor
+scroll for 
+select * from emp9 
+
+open rpt1;
+fetch last from rpt1;
+fetch prior from rpt1;
+fetch next from rpt1;
+fetch first from rpt1;
+
+
+fetch absolute 3 from rpt1;
+fetch relative 1 from rpt1; --> relative to present position of cursor
+fetch relative -2 from rpt1; 
+
+After opening a cursor, doing relative -2 etc. starts scrolling from back. Once it goes blank no more reverse.
+relative should always be applied after absolute.
+
+
+=================================================================================================
+
+Trigger:
+
+Trigger is a special kind of stored procedure that automatically gets executed when event occurs 
+in a database server.
+
+stored procedures must called, but triggers are automatically called.
+
+Types:
+-DDL 
+-DML trigger -->
+	-After Trigger
+	-Insteadof trigger
+	
+creating triggers:
+
+--- DDl trigger
+create trigger safety 		-- trigger name is safety
+on database
+for drop_table, create_table, alter_table
+as
+	raiserror
+	('You must disable Trigger 'safety' to drop synonyms!', 10, 1)
+	rollback;
+	
+Henceforth if user executes create, drop, alter etc. the alteration done by the user will be rolled back
+after firing the trigger message.
+
+
+-- Disable the trigger
+disable trigger safety on database;
+
+-- enable trigger
+enable trigger safety on database;
+
+
+-- dropping trigger
+drop trigger safety on database;
+
+
+-DML trigger
+
+After trigger
+--------------
+create trigger <trigger_name> on <table_name>
+after insert
+as
+RAISERROR
+('Insert is not used', 16, 1)
+rollback;
+
+
+also,
+create trigger <trigger_name> on <table_name>
+after insert, update, delete
+as
+select * from <table_name>;
+
+
+-- Create trigger to fire if no of record entered is less than 'n' 
+create trigger <trigger_name> on <table_name>
+after insert
+as
+if exists(select * from <table_name> where <table_id> < 'n')
+begin
+RAISERROR
+('You cannot insert less than 'n'', 16, 1)
+rollback
+end;
+
+n-1 record will be inserted then rolled back.
+before rolling back the temporary data can be stored in a 'MAGIC TABLE'
+
+MAGIC TABLE
+===========
+select * from inserted
+select * from deleted
+
+create trigger <trigger_name> on <table_name>
+after insert
+as
+if exists(select * from <table_name> where <table_id> < 'n')
+begin
+select * from inserted
+RAISERROR
+('You cannot insert less than 'n'', 16, 1)
+rollback
+end;
+
+
+Insteadof trigger
+------------------
+desc in msssql --> exec sp_helptext <Table/View name>
+
+-- Trying to insert data via view into a database with 4 fields, two are not null, 
+-- 1 autoincrement,  1 computed from other rows
+
+create trigger <trigger_name> on <View_name>
+instead of insert
+as
+begin
+	-- Build an Insert statement ignoring inserted, id and
+	-- inserted, computedCol
+	Insert into basetable
+		select color, material
+		from <View_name>
+end;
+
+-- Magic table collects the 4 fields of the record, neglects two and copies two back.
+
+
+===============================================================================================
+
+creating Backup of database:
+
+-->backup has an extension .bak --> Restore later on
+--> copying database generates two files
+	-> log file -> .ldf --> only schema
+	-> master database files -> .mdf  -> schema and data
+	-> secondary datafile  -> .ndf
+	-------------> attachment.
+--> script of database
+commands. -- .sql --> run that script
