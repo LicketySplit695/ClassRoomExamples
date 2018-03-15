@@ -1,0 +1,37 @@
+Objects in ASP .Net
+
+-> Request --> Client send a request to the server
+-> Response --> Server generate a postback response to the client
+-> Sesion --> Object that can access the data between page call
+-> Application --> Object that can access the data in whole application
+-> Server --> We can access the resources of the server.
+
+State Management System
+-> Client Side
+	-> viewstate --> we can access the data within the pag, type is hiddes, storage type is collection
+					data storage in encrypted format
+	-> HiddenField --> We can access the data within page. storage type is single valued.
+					data is not stored in encrypted format.
+	-> Cross page Posting --> We can access the data one page to another page only control value.
+	-> Querystring --> We can access the data one page to another page using URL. Max limit -> 1024 char
+	-> Cookies --> We can access the data one page to any value. Default time is 30 days. Max data = 4kb.
+	
+-> Server Side
+
+
+Every page has a property: enableViewState --> by default true
+
+Difference between 
+------------------
+Response.Redirect
+
+--> Redirect to another page and follow the
+round trip
+
+--> url will be changed
+
+
+Server.Transfer
+--> direct to another page, no round trip
+
+--> url will not be changed

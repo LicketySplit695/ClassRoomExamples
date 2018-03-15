@@ -1,0 +1,32 @@
+.NET Architecture
+------------------
+
+.NET Architecture supports :
+	--> one tier
+	--> two tier
+	--> three tier
+	--> n tier
+
+	
+	Two tier
+   ----------
+	                  |
+	+--------------+  |                  +--------------+
+	| Application  |<---Connectivity---->| Database     |
+	+--------------+  |                  +--------------+  
+	        |         |
+		1 tier    |             database should be in one or many servers
+Application maybe 
+in different machines
+
+
+	 Three Tier
+	-----------
+	
+	+--------------+                  +--------------+               +--------------+           +--------------+
+	| Presentation |  <-------------> |  Business    | <-----------> |  Data        | <-------->| Database     |
+	| Layer (PL)   |                  |  Logic (BL)  |               |  Access(DAL) |           |              |
+	+--------------+                  +--------------+               +--------------+           +--------------+ 
+	
+PL --> where data is shown
+eg. login page etc.

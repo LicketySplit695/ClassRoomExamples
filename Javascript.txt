@@ -1,0 +1,18 @@
+JAVASCRIPT:
+
+- Object Based
+- Case Sensitive language
+
+Events -->
+client side control -> on click
+server side control -> on client click
+
+variable declaration --> no concept of datatype, no '$' sign in name
+var a = 10; only 'var' can be used
+or,
+a = 10;
+
+3 types of popup in javascript
+-Alert --> message to show
+-Confirm --> 
+-Prompt --> Input in javascript

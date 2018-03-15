@@ -1,0 +1,63 @@
+1. DTD --> Document Type Definition
+
+2. Document Type of HTML 5 --> <!DOCTYPE html>
+
+3. DTD is decided by 'w3c' World wide web consortium
+
+4. JQuery is open source
+
+5. 
+<html>
+<head>
+<title>
+Home
+</title>
+	</head>
+	<body>
+	<h1>  BOLDEST  </h1>
+	.
+	.
+	.
+	<h6>  WEAKEST  </h6>
+	</body>
+</html>
+
+
+6. Line --> (All inside <body> </body>)
+	-inline element --> hyperlink etc. 
+	-newLine element --> <p> <h1> etc. that gets to new line
+	
+7. Comment in html <!-- This is a comment -->
+	CSS comment /*  This is a comment  */
+	Javascript comment same as c# etc.
+	
+8. CSS calling, meta tag, title, description, icon tag, javascript code all under <head>tag
+
+9. Anchor tag --> to create hyperlink -->
+<a href="First.html" target = "_blank">firstpage</a>  (by default target is self)
+
+10. To break a line --> <br>
+
+11. Background color --> <body> style="background-color:Red" </body>  ->inline css 
+also use bgcolor = "Red"
+
+12. 3 types of css
+	- inline --> css applied on same line
+	- internal --> within page
+	- external --> multiple pages
+	<h1 style = "color: blue; text-align: center"> Hello </h1>
+
+13. block level element <div></div>
+
+14. Attaching image <img src = "path to image" />
+
+15. List element -->
+<ul style="list-style-type:disc">
+	<li>Coffee</li>
+	<li>Tea</li>
+	<li>Milk</li>
+	<li>IceTea</li>
+</ul>
+
+<ol>
+<dl>

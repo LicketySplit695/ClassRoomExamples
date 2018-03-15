@@ -1,0 +1,132 @@
+
+	                +-------------------------ADO.NET---------------------+				
+					|				+-->fill schema<----------+			  |				+---->Data Relation		
+			.NET data Provider		|                         |         DataSet---------+---->Data View
+	+-------------------------------+-----------+		+-----+-----------------------------------------------------+				
+	|	Connection Object			|			|		|				Data Table									|
+	|	Command 	"		DataAdapter			|		|	+---------------------------------------------------+	|
+	|	DataReader 	"		Select Command		|		|	|			Data Row								|	|
+	|						Insert	"			|		|	|	+-------------------------------------------+	|	|
+	|						Update 	"			|		|	|	|	____Data Column______________________	|	|	|				
+	|						Delete 	"			|		|	|	|	|Constraint, Primary Key, Foreign Key|	|	|	|
+	|											|		|	|	|	|____________________________________|	|	|	|
+	+---+---------------+---------------+-------+		|	|	+-------------------------------------------+	|	|
+		|				|				|				|	+---------------------------------------------------+	|				
+		|				|				|				+-------------------+---------------------------------------+		
+		SQL			Oracle			MS- Access/MySQL                        |
+		|				|				|									|
+using System.data.		|	using System.data.OLEDB							XAML
+sqlClient				|																
+						|
+		using System.data.OracleClient
+		
+				Connected Mode											DisConnected Mode 
+	
+	Dataset ->
+		-> Object that can be used to retreived the data from the database.
+		-> Its like a RDBMS in memory
+		-> Dataset stored in XML Format.
+		-> Dataset is a collection of datatable
+		-> Read-only and forward only
+		
+	Data Relation 
+		-> Object that can establish relation between more than one table
+		
+	Data View
+		-> Object that can used to filter and sort the data in disconnected approach
+
+		
+	Command Builder --> provides permission to the adapter to fetch the data from comnnected
+		approach andupdate the data in sql server
+	
+		Using update method 
+
+
+Data Controls:
+-------------
+
+DOTNET 1.1:
+1) Repeater Control 
+	-> Repeater control is a container but repeater control doesn't have any format (row/column)
+	-> how to create the format of repeater control: using different template we can create
+2) Datalist
+	-> same as repaeater
+	-> difference: Repeater control is a read only control but we can edit the data in datalist
+3) Datagrid
+	-> Datagrid have its own format. We can edit the data in datagrid
+
+DOTNET 2.0:
+1) GridView
+2) Formview
+3) Detailsview 
+
+DOTNET 3.5
+1) Listview
+2) Datapager
+
+
+Eval() and Bind() 
+	Eval() --> single way binding --> only show
+	Bind() --> Two way Binding --> show and change
+
+--> in aspx by default post is used.	
+--> <form> tag is by default get
+--> Take 'submit' type for button to be executed in server.
+
+Difference between GET AND POST
+Get
+--> Data shows in url
+--> Limited transfer using get
+
+Post
+--> Data is not shown up in url
+--> Post is more secure
+
+While file upload control a mandatory statement
+--> enctype="mutipart/form-data"
+
+
+
+
+=============================================================================
+
+Executing stored proc in server:
+method 1:
+cmd = new SqlCommand("usp_search", con);
+cmd.CommandType = CommandType.StoredProcedure;
+cmd.Parameters.AddwithValue("@name", name);
+
+method 2:
+cmd = new SqlCommand("exec usp_search'" + Textbox1.Text + "'" + con);
+==============================================================================
+
+Configuration file --> data is stored in XML format.
+	-> Machine.config
+	-> Web.config
+	
+We can use more than one web.config in one project --> put that in a folder (local). 
+
+
+putting connection string in web.config:
+----------------------------------------
+
+<configuration>
+	<connectionStrings>
+		<add name = "constr" connectionString = "server = <SQLSERVER_Name>; database = <database_name>;
+		integrated security = true" providerName = "System.Data.SqlClient" />
+	</connectionStrings>
+</configuration>
+
+'constr' variable is created having the connection details, which has to be called.
+
+in .cs file
+------------
+Add namespace:
+using System.Configuration;
+
+
+SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["constr"].ToString());
+
+
+================================================================================
+

@@ -1,0 +1,52 @@
+Project Development
+-------------------
+
+Presentation                       |    Business                          |   Data Access
+Layer                              |    Layer                             |   Layer                          
+-----------------------------------+--------------------------------------+---------------------------------- 
+
+
+Data-Access-Layer
+
+1) Put the connection string inside web.config inside <configuration> tag
+2) Add a class file 
+	-> By default all class files are stored in AppCode Folder.
+	-> Project Database is stored in AppData folder.
+	
+
+Webuser Control --> Access within website -->.ascx (Active Server Control)
+Custom Control --> Access Multiple Website -->.dll
+
+We can to reduce lot of coding and designing by the use of webuser control
+
+Calling a webuser control within a webpage
+-------------------------------------------
+	--> By using register directive we can call any webuser control within webopage
+		'<%@' --> means directive
+	
+	
+WebService:- System.web.Services.WebService
+	-> Its a business logic component that provide the functionality through internet --> .asmx is extension
+	-> SOA -> service oriented architecture 
+	
+Consuming webservice:
+	-> http get --> url get the method
+	-> http show --> server generate a postback responce to the client/ press invoke button
+	-> soap --> lightweight protocol , used for ttransfering the data in a plateform independant way
+		soap access services from server through object.
+	-> wsdl --> web service description language --> we can see type/metadata --> data transfer via soap
+	
+[WebMethod] --> tag attribute for web service/ web method
+Disco --> Helps in discovering service
+Uddl ->
+
+
+Ajax 
+	--> Asynchronous javascript and XML
+	--> Its a technique for creating better, faster, and more attractive web application
+	--> It stops the whole page refereshment for each postback.
+	--> Ajax hits the server
+	--> With Ajax Javascript can communicate directly with the server using Javascript XMLHttpRequest
+		With this we can get data without refreshing the entire page.
+	--> We can use one script manager within one webpage, but more than one updatepanel could be more than one.
+	--> 
