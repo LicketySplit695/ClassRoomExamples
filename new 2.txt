@@ -1,0 +1,5 @@
+Uploading Webpage in IIS Server:
+
+aspnet_regiis -i
+
+-- Publishing The website:

@@ -1,0 +1,11 @@
+Master Page:
+
+- Overall layout of the application that can be stored in master page.
+- .master is the extension of master page
+
+- Navigation Control
+	- Menu
+	- Preview
+	- Sitemap
+	
+Calling MasterPage in your page

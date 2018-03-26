@@ -1,0 +1,168 @@
+Interview Questions
+
+Fundamentals:
+1. What is dotnet framework?
+
+2. Dotnet Compilation? Types?
+
+3. What is MSIL?
+
+4. Working of CLR?
+
+5. What is assembly? Types ?
+
+6. Features of CLR?
+
+7. Memory Management? AGC (Automatic Garbage)?
+
+8. (ALL part of AGC) -> Dispose Finalise Destructor Generaion? 
+
+
+DataTypes:
+1. Data Types? Boxing and unboxing?
+
+OOPS:
+1. All Features with example?
+
+2. Abstract class and interface with live example?
+
+3. Overloading and overriding
+
+4. Class and Object -> Real time difference ?
+
+5. Collection? 
+
+6. Difference between collection and generic
+
+7. IComaparable, IComparer, IEnumerable and Overloading Equals() Method?
+
+8. Delegates? Types? Event Programming? --> Annonymous Method?
+
+9. Exception handling? User Defined Exception? Why used? Syntax?
+
+10. LINQ? Types? 
+
+11. File Handling --> Not Asked generally
+
+12. Threading --> Not Asked generally
+
+13. Reflection? why used?
+
+14. Serialisation? Why used? 
+
+ADO.NET
+1. What is ADO.NET? Why used?
+
+2. Connected and disconnected mode?
+
+3. Command Object Methods? Why Used and return types?
+
+4. Methods of DataAdapter Class?
+
+5. Why use Dataset, Datatable, DataRow, Constraints? Why used? 
+
+6. SQLBulk copy?
+
+7. Transactions in ADO.NET?
+
+8. CommandBuilder? Why used?
+
+ASP.NET
+1. Why ASP.NET? 
+
+2. HTML control and Server Control? Difference?
+
+3. Inline code and code-behind code?
+
+4. Form methods- Get and Post? Difference?
+
+5. ASP.NET directives? Page and Register Directives for example
+
+6. Controls in ASP.NET
+
+7. AutoPostBAck and IsPostBack? Difference?
+
+8. DataControls -> GridView FormView DesignView? Difference?
+
+9. Bind Data in DataControls and ListControls?
+
+10. EventBubbling?
+
+11. Difference between eval() and Bind()?
+
+12. MasterPage? ContentPlaceHolder? How to call masterPage in asp.net page -> 3ways (Page Directives, web.config)?
+
+13. Nested masterPage?
+
+14. Skin Files and css? Difference?
+
+15. Security in web.config/
+
+16. Difference between authentication and authorization?
+
+17. Use of Global.asax file?
+
+Webuser Control
+1. What is webUserControl? How to call in webpage?
+
+2. Difference between webuser control and custom control?
+
+3. Difference between application and session?
+
+4. Session Mode? Types?
+
+5. Role based security?
+
+JQuery
+1. What is the use of Document.Ready() ?
+
+2. AJAX? How to Use Ajax? Ajax controls? 
+
+WebServices
+1. What is the use of WebMethod?
+
+2. Protocols? GET POST SOAP WSDL UDDI and DISCO file?
+
+3. How to create a proxy in web service?
+
+WCF?
+1. What is ABC?
+
+2. Binding in WCF?
+
+3. Difference between Webservice and WCF?
+
+WPF?
+1. What is WPF?
+
+2. Difference between Windows Application and WPF application
+
+3. What is the use of XAML in wpf?
+
+Entity framework:
+1. CRUD operation in Entity Framework? in LINQ? in ADO.NET/
+
+2. Difference between LinQ and Entity Framework?
+
+3. Approaaches in Entity Framework?
+
+4. Poco model in Entity Framework?
+
+MVC:
+1. View data
+
+2. View Bag
+
+3. Temp Data
+
+4. Difference between ASP.NET and MVC?
+
+5. In MVC Difference between aspx engine and razor engine?
+
+6. Data annotation in MVC?
+
+7. In MVC What is partial view?
+
+8. How to implement Master Page in MVC?
+
+9. 
